@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
                 </h3>
                 <ul className="mt-6 space-y-4 list-none p-0">
                     {links.links.map((link) => (
-                        <li>
+                        <li key={link.name}>
                             <a
                                 href={link.url}
                                 className="text-sm leading-6 text-gray-600 hover:text-gray-900"
