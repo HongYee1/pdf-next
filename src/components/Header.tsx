@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header: React.FC = () => {
     return (
-        <header className='flex justify-between items-center p-[10px] h-[50px]'>
+        <header className='flex justify-between items-center p-[10px] h-[70px]'>
             <a href="/" className='p-[10px]'>Logo</a>
             <nav className='flex text-[15px] font-medium'>
                 <a href="/pricing" className='hover:underline p-[10px]'>Pricing</a>
