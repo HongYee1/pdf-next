@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../../public/favicon.ico"
+import logo from "../../public/favicon.ico";
 
 type linksGroup = {
     title: string;
     links: { name: string; url: string }[];
-}
+};
 
 const productsLinks: linksGroup = {
     title: "Products",
@@ -48,11 +48,18 @@ const Footer: React.FC = () => {
     const renderLinks = (links: linksGroup) => {
         return (
             <div>
-                <h3 className="text-sm font-semibold leading-6 text-gray-900">{links.title}</h3>
+                <h3 className="text-sm font-semibold leading-6 text-gray-900">
+                    {links.title}
+                </h3>
                 <ul className="mt-6 space-y-4 list-none p-0">
                     {links.links.map((link) => (
                         <li>
-                            <a href={link.url} className="text-sm leading-6 text-gray-600 hover:text-gray-900">{link.name}</a>
+                            <a
+                                href={link.url}
+                                className="text-sm leading-6 text-gray-600 hover:text-gray-900"
+                            >
+                                {link.name}
+                            </a>
                         </li>
                     ))}
                 </ul>
