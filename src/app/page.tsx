@@ -12,7 +12,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle, ZoomIn, ZoomOut } from "lucide-react";
+import { LoaderCircle, RefreshCw, ZoomIn, ZoomOut } from "lucide-react";
 import { saveAs } from "file-saver";
 import { degrees, PDFDocument } from "pdf-lib";
 
@@ -29,7 +29,9 @@ export default function Home() {
     const [fileUrl, setFileUrl] = useState<string | null>(null); // 存储文件URL
     const [numPages, setNumPages] = useState<number>(0); // 存储PDF总页数
     const [rotationArray, setRotationArray] = useState<number[]>([0]); // 存储每页旋转角度
-    const [pdfBytes, setPdfBytes] = useState<Uint8Array | null>(null);
+    const [pdfBytes, setPdfBytes] = useState<Uint8Array | null>(null); // 存储PDF字节内容
+    const [width, setWidth] = useState<number>(200); // 存储PDF宽度
+    const [scale, setScale] = useState<number>(0.3); // 存储缩放比例
 
     useEffect(() => {
         // 加载 PDF 并获取其字节内容
@@ -131,11 +133,17 @@ export default function Home() {
     }
 
     const zoomIn = () => {
-        // TODO: Implement zoom in functionality
+        if (width < 500) {
+            setScale(scale + 0.1);
+            setWidth(width + 50);
+        }
     }
 
     const zoomOut = () => {
-        // TODO: Implement zoom out functionality
+        if (width > 200) {
+            setScale(scale - 0.1);
+            setWidth(width - 50);
+        }
     }
 
     return (
@@ -201,6 +209,7 @@ export default function Home() {
                                     <Button
                                         className="w-[36px] h-[36px] bg-white hover:scale-105 hover:bg-white rounded-full"
                                         onClick={zoomIn}
+                                        disabled={width >= 500}
                                     >
                                         <ZoomIn color="#202937" />
                                     </Button>
@@ -216,6 +225,7 @@ export default function Home() {
                                     <Button
                                         className="w-[36px] h-[36px] bg-white hover:scale-105 hover:bg-white rounded-full"
                                         onClick={zoomOut}
+                                        disabled={width <= 200}
                                     >
                                         <ZoomOut color="#202937" />
                                     </Button>
@@ -236,18 +246,22 @@ export default function Home() {
                     >
                         {Array.from(new Array(numPages), (_el, index) => (
                             <div
-                                className="w-[200px] flex flex-col items-center justify-center bg-white p-3 hover:bg-gray-50 hover:cursor-pointer relative overflow-hidden"
+                                style={{ maxWidth: `${width}px` }}
+                                className={`flex flex-col items-center justify-center bg-white p-3 hover:bg-gray-50 hover:cursor-pointer relative overflow-hidden`}
                                 key={`page_${index + 1}`}
                                 onClick={() => rotatePage(index)}
                             >
                                 <div className="pointer-events-none w-full shrink flex-1 flex items-center justify-center">
                                     <Page
                                         pageNumber={index + 1}
-                                        width={176}
                                         rotate={rotationArray[index]}
+                                        scale={scale}
                                     />
                                 </div>
                                 <div className="">{index + 1}</div>
+                                <div className="absolute top-2 right-2 bg-[#FD5F39] p-[2px] rounded-full">
+                                    <RefreshCw color="#ffffff" size={14}  />
+                                </div>
                             </div>
                         ))}
                     </Document>
