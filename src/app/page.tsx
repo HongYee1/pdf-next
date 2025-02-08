@@ -2,7 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
-import Image from "next/image";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import {
