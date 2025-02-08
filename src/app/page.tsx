@@ -11,7 +11,7 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle, RefreshCw, ZoomIn, ZoomOut } from "lucide-react";
+import { CloudUpload, LoaderCircle, RefreshCw, ZoomIn, ZoomOut } from "lucide-react";
 import { saveAs } from "file-saver";
 import { degrees, PDFDocument } from "pdf-lib";
 
@@ -23,8 +23,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 export default function Home() {
     const pdfRef = useRef<any>(null);
     const fileRef = useRef<HTMLInputElement>(null);
-    const [isDragging, setIsDragging] = useState(false); // 是否正在拖拽
-    const [files, setFiles] = useState<File[]>([]); // 存储上传的文件
     const [fileUrl, setFileUrl] = useState<string | null>(null); // 存储文件URL
     const [numPages, setNumPages] = useState<number>(0); // 存储PDF总页数
     const [rotationArray, setRotationArray] = useState<number[]>([0]); // 存储每页旋转角度
@@ -49,7 +47,6 @@ export default function Home() {
         const files = e.target.files;
         if (files) {
             const selectedFiles = Array.from(files);
-            setFiles(selectedFiles);
 
             // 处理文件
             const theFileUrl = URL.createObjectURL(selectedFiles[0]);
@@ -61,13 +58,11 @@ export default function Home() {
     // 处理拖拽进入区域
     const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setIsDragging(true);
     };
 
     // 处理拖拽离开区域
     const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setIsDragging(false);
     };
 
     // 处理拖拽悬停
@@ -78,11 +73,9 @@ export default function Home() {
     // 处理文件释放
     const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
         e.preventDefault();
-        setIsDragging(false);
 
         // 获取拖拽的文件
         const droppedFiles = Array.from(e.dataTransfer.files);
-        setFiles(droppedFiles);
 
         // 处理文件
         const theFileUrl = URL.createObjectURL(droppedFiles[0]);
@@ -125,7 +118,6 @@ export default function Home() {
     }
 
     const removePdf = () => {
-        setFiles([]);
         setFileUrl(null);
         setNumPages(0);
         setRotationArray([0]);
@@ -173,8 +165,9 @@ export default function Home() {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
-                            className="w-[275px] h-[350px] bg-white flex justify-center items-center rounded-md border-dashed border border-stone-300 cursor-pointer"
+                            className="w-[275px] h-[350px] bg-white flex flex-col justify-center items-center rounded-md border-dashed border border-stone-300 cursor-pointer"
                         >
+                            <CloudUpload />
                             <span className="pointer-events-none font-medium text-sm leading-6 pointer opacity-75">
                                 Click to upload or drag and drop
                             </span>
