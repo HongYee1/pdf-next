@@ -1,6 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import logo from "../../public/favicon.ico";
+import tiktok from "../../public/tiktok-svgrepo-com.svg";
+import twitter from "../../public/twitter-154-svgrepo-com.svg";
+import ins from "../../public/instagram-svgrepo-com.svg";
+import youtube from "../../public/youtube-svgrepo-com.svg";
 
 type linksGroup = {
     title: string;
@@ -72,11 +76,17 @@ const Footer: React.FC = () => {
             <div className="max-w-7xl flex justify-between items-centerpx-6 pb-8 pt-16 sm:mt-12 lg:mt-16 lg:px-8 border-t border-gray-900/10">
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
                     <div className="space-y-8">
-                        <Image className="h-7 w-7" src={logo} alt="" />
+                        <Image width={24} height={24} src={logo} alt="logo" />
                         <p>
                             Chat with any PDF: ask questions, get summaries,
                             find information, and more.
                         </p>
+                        <div className="flex space-x-4">
+                            <Image width={24} height={24} src={tiktok} alt="tiktok" />
+                            <Image width={24} height={24} src={ins} alt="ins" />
+                            <Image width={24} height={24} src={twitter} alt="twitter" />
+                            <Image width={24} height={24} src={youtube} alt="youtube" />
+                        </div>
                     </div>
                     <div className="mt-16 md:grid md:grid-cols-3 md:gap-8 xl:col-span-2 xl:mt-0">
                         {renderLinks(productsLinks)}
